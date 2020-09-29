@@ -9,6 +9,8 @@ from abc import ABC, abstractmethod
 
 from operation import Operation
 from param_operation import ParamOperation
+from loss import Loss
+from layer import Layer
 
 
 class WeightMultiply(ParamOperation):
@@ -51,47 +53,6 @@ class Sigmoid(Operation):
         return sigmoid_backward * output_grad
 
 
-class Layer(ABC):
-    def __init__(self, neurons: int):
-        self._neurons = neurons
-        self._first_pass = True
-        self._params: List[ndarray] = []
-        self._param_grads: List[ndarray] = []
-        self._operations: List[Operation] = []
-
-    @abstractmethod
-    def setup_layer(self, input: ndarray):
-        ...
-
-    def forward(self, input: ndarray) -> ndarray:
-        if self._first_pass:
-            self.setup_layer(input)
-            self._first_pass = False
-        self._input = input
-        self._output = self._input
-        for op in self._operations:
-            self._output = op.forward(self._output)
-        return self._output
-
-    def backward(self, output_grad: ndarray) -> ndarray:
-        self._input_grad = output_grad
-        for op in reversed(self._operations):
-            self._input_grad = op.backward(self._input_grad)
-        self.param_grads()
-        return self._input_grad
-
-    def param_grads(self):
-        self._param_grads = []
-        for op in self._operations:
-            if issubclass(op.__class__, ParamOperation):
-                self._param_grads.append(op._param_grad)
-
-    def params(self):
-        self._params = []
-        for op in self._operations:
-            if issubclass(op.__class__, ParamOperation):
-                self._params.append(op._param)
-
 
 class Dense(Layer):
     def __init__(self, neurons: int, activation: Operation = Sigmoid()) -> None:
@@ -108,25 +69,6 @@ class Dense(Layer):
             self._activation,
         ]
 
-
-class Loss(ABC):
-    def forward(self, prediction: ndarray, target: ndarray) -> float:
-        self._prediction = prediction
-        self._target = target
-        self._loss_value = self.output()
-        return self._loss_value
-
-    def backward(self) -> ndarray:
-        self._input_grad = self.input_grad()
-        return self._input_grad
-
-    @abstractmethod
-    def output(self) -> float:
-        ...
-
-    @abstractmethod
-    def input_grad(self) -> ndarray:
-        ...
 
 
 class MeanSquaredError(Loss):
