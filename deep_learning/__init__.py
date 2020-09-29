@@ -12,6 +12,7 @@ from param_operation import ParamOperation
 from loss import Loss
 from layer import Layer
 from neural_network import NeuralNetwork
+from optimizer import Optimizer
 
 
 class WeightMultiply(ParamOperation):
@@ -84,14 +85,6 @@ class MeanSquaredError(Loss):
 
 
 
-
-class Optimizer(ABC):
-    def __init__(self, learning_rate: float = 0.01) -> None:
-        self._learning_rate = learning_rate
-
-    @abstractmethod
-    def step(self) -> None:
-        ...
 
 
 class SGD(Optimizer):
