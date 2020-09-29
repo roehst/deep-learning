@@ -7,3 +7,11 @@ Right now, it provides only very basic functionality:
 - Linear and sigmoid activations
 - SGD optimization
 - Backprop
+
+## Things I want to do
+
+Besides adding more layers, losses and optimizers:
+
+- Inspect tensors flowing between operations and layers
+- Track the learning history
+- Add timing features
