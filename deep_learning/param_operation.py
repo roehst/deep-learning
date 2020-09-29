@@ -2,6 +2,7 @@ from abc import abstractmethod
 from operation import Operation
 from numpy import ndarray
 
+
 class ParamOperation(Operation):
     def __init__(self, param: ndarray):
         self._param = param
@@ -14,6 +15,3 @@ class ParamOperation(Operation):
     @abstractmethod
     def param_grad(self, output_grad: ndarray) -> ndarray:
         ...
-
-
-
