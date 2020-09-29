@@ -11,6 +11,7 @@ from operation import Operation
 from param_operation import ParamOperation
 from loss import Loss
 from layer import Layer
+from neural_network import NeuralNetwork
 
 
 class WeightMultiply(ParamOperation):
@@ -82,39 +83,6 @@ class MeanSquaredError(Loss):
         return 2.0 * (self._prediction - self._target) / self._prediction.shape[0]
 
 
-class NeuralNetwork:
-    def __init__(
-        self,
-        layers: List[Layer],
-        loss: Loss,
-    ) -> None:
-        self._layers = layers
-        self._loss = loss
-
-    def forward(self, X: ndarray) -> ndarray:
-        out = X
-        for layer in self._layers:
-            out = layer.forward(out)
-        return out
-
-    def backward(self, loss_grad: ndarray):
-        grad = loss_grad
-        for layer in reversed(self._layers):
-            grad = layer.backward(grad)
-
-    def train_batch(self, X: ndarray, y: ndarray) -> float:
-        predictions = self.forward(X)
-        loss = self._loss.forward(predictions, y)
-        self.backward(self._loss.backward())
-        return loss
-
-    def params(self):
-        for layer in self._layers:
-            yield from layer._params
-
-    def param_grads(self):
-        for layer in self._layers:
-            yield from layer._param_grads
 
 
 class Optimizer(ABC):
