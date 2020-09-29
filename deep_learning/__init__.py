@@ -49,7 +49,7 @@ y_test = normalize(y_test)
 
 trainer = Trainer(lr, SGD(learning_rate=0.0002))
 
-trainer.fit(X_train, y_train.reshape(-1, 1), X_test, y_test.reshape(-1, 1), epochs=200)
+trainer.fit(X_train, y_train, X_test, y_test, epochs=200)
 
 for p in lr.params():
     print(p)
