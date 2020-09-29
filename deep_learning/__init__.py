@@ -33,8 +33,6 @@ beta = np.random.normal(1, 1, (k, 1))
 error = np.random.normal(0, 1, (n, 1))
 y = alpha + np.dot(X, beta) + error
 
-index = list(range(50))
-
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 
 trainer = Trainer(lr, SGD(learning_rate=0.002))
