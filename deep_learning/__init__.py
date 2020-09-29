@@ -26,11 +26,12 @@ lr = NeuralNetwork(
 )
 
 n = 200
-X = np.random.normal(0, 1, (n, 1))
+k = 2
+X = np.random.normal(0, 1, (n, k))
 alpha = 2.0
-beta = np.array([[1.25]])
+beta = np.random.normal(1, 1, (k, 1))
 error = np.random.normal(0, 1, (n, 1))
-y = alpha + beta * X + error
+y = alpha + np.dot(X, beta) + error
 
 index = list(range(50))
 
