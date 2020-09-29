@@ -1,10 +1,12 @@
 from abc import ABC, abstractmethod
 
 from numpy import ndarray
+import numpy as np
 
 
 class Operation(ABC):
     def forward(self, input: ndarray) -> ndarray:
+        assert not np.any(np.isnan(input))
         self._input = input
         self._output = self.output()
         return self._output

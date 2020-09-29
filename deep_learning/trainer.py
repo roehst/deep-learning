@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Generator
 
 from numpy import ndarray
 
@@ -18,7 +18,7 @@ class Trainer:
 
     def generate_batches(
         self, X: ndarray, y: ndarray, size: int = 32
-    ) -> Tuple[ndarray]:
+    ) -> Generator[Tuple[ndarray, ndarray], None, None]:
 
         N = X.shape[0]
 
@@ -45,9 +45,11 @@ class Trainer:
         for e in range(epochs):
             X_train, y_train = permute_data(X_train, y_train)
             batch_generator = self.generate_batches(X_train, y_train, batch_size)
+
             for ii, (X_batch, y_batch) in enumerate(batch_generator):
                 self._net.train_batch(X_batch, y_batch)
                 self._optim.step()
+
             if (e + 1) % eval_every == 0:
                 test_preds = self._net.forward(X_test)
                 loss = self._net._loss.forward(test_preds, y_test)

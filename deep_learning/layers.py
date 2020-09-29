@@ -1,3 +1,4 @@
+from typing import List
 from abc import ABC, abstractmethod
 
 import numpy as np
@@ -30,8 +31,10 @@ class Layer(ABC):
             self._first_pass = False
         self._input = input
         self._output = self._input
+        assert not np.any(np.isnan(self._output))
         for op in self._operations:
             self._output = op.forward(self._output)
+        assert not np.any(np.isnan(self._output))
         return self._output
 
     def backward(self, output_grad: ndarray) -> ndarray:

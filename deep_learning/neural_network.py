@@ -1,4 +1,5 @@
 from numpy import ndarray
+import numpy as np
 from typing import List
 
 from deep_learning.layers import Layer
@@ -18,6 +19,7 @@ class NeuralNetwork:
         out = X
         for layer in self._layers:
             out = layer.forward(out)
+        assert not  any(np.isnan(out))
         return out
 
     def backward(self, loss_grad: ndarray):
