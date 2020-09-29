@@ -7,24 +7,9 @@ from sklearn.model_selection import train_test_split
 
 from abc import ABC, abstractmethod
 
+from operation import Operation
 
-class Operation(ABC):
-    def forward(self, input: ndarray) -> ndarray:
-        self._input = input
-        self._output = self.output()
-        return self._output
 
-    def backward(self, output_grad: ndarray) -> ndarray:
-        self._input_grad = self.input_grad(output_grad)
-        return self._input_grad
-
-    @abstractmethod
-    def output(self) -> ndarray:
-        ...
-
-    @abstractmethod
-    def input_grad(self, output_grad: ndarray) -> ndarray:
-        ...
 
 
 class ParamOperation(Operation):
@@ -139,7 +124,7 @@ class Dense(Layer):
         ]
 
 
-class Loss(ABC):    
+class Loss(ABC):
     def forward(self, prediction: ndarray, target: ndarray) -> float:
         self._prediction = prediction
         self._target = target
@@ -287,5 +272,5 @@ trainer = Trainer(lr, SGD(learning_rate=0.002))
 
 trainer.fit(X_train, y_train, X_test, y_test, epochs=5000)
 
-for p in (lr.params()):
+for p in lr.params():
     print(p)
