@@ -4,6 +4,7 @@ from typing import List
 from layer import Layer
 from loss import Loss
 
+
 class NeuralNetwork:
     def __init__(
         self,
@@ -37,4 +38,3 @@ class NeuralNetwork:
     def param_grads(self):
         for layer in self._layers:
             yield from layer._param_grads
-

@@ -5,6 +5,7 @@ from numpy import ndarray
 from operation import Operation
 from param_operation import ParamOperation
 
+
 class Layer(ABC):
     def __init__(self, neurons: int):
         self._neurons = neurons
@@ -45,5 +46,3 @@ class Layer(ABC):
         for op in self._operations:
             if issubclass(op.__class__, ParamOperation):
                 self._params.append(op._param)
-
-
