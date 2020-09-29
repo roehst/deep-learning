@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 from numpy import ndarray
 
+
 class Operation(ABC):
     def forward(self, input: ndarray) -> ndarray:
         self._input = input
@@ -19,4 +20,3 @@ class Operation(ABC):
     @abstractmethod
     def input_grad(self, output_grad: ndarray) -> ndarray:
         ...
-
