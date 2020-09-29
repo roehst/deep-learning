@@ -1,7 +1,7 @@
 from numpy import ndarray
 from typing import List
 
-from deep_learning.layer import Layer
+from deep_learning.layers import Layer
 from deep_learning.loss import Loss
 
 

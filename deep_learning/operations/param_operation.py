@@ -39,4 +39,3 @@ class BiasAdd(ParamOperation):
     def param_grad(self, output_grad: ndarray) -> ndarray:
         param_grad = np.ones_like(self._param) * output_grad
         return np.sum(param_grad, axis=0).reshape(1, param_grad.shape[1])
-

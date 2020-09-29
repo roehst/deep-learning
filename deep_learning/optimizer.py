@@ -8,3 +8,9 @@ class Optimizer(ABC):
     @abstractmethod
     def step(self) -> None:
         ...
+
+
+class SGD(Optimizer):
+    def step(self) -> None:
+        for (param, param_grad) in zip(self.net.params(), self.net.param_grads()):
+            param -= self._learning_rate * param_grad

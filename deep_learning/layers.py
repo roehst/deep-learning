@@ -1,8 +1,15 @@
 from abc import ABC, abstractmethod
 
+import numpy as np
 from numpy import ndarray
 
-from deep_learning.operations import Operation, ParamOperation
+from deep_learning.operations import (
+    Operation,
+    ParamOperation,
+    Sigmoid,
+    WeightMultiply,
+    BiasAdd,
+)
 
 
 class Layer(ABC):
@@ -45,3 +52,19 @@ class Layer(ABC):
         for op in self._operations:
             if issubclass(op.__class__, ParamOperation):
                 self._params.append(op._param)
+
+
+class Dense(Layer):
+    def __init__(self, neurons: int, activation: Operation = Sigmoid()) -> None:
+        super().__init__(neurons)
+        self._activation = activation
+
+    def setup_layer(self, input: ndarray):
+        self._params = []
+        self._params.append(np.random.randn(input.shape[1], self._neurons))
+        self._params.append(np.random.randn(1, self._neurons))
+        self._operations = [
+            WeightMultiply(self._params[0]),
+            BiasAdd(self._params[1]),
+            self._activation,
+        ]

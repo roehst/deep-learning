@@ -37,5 +37,3 @@ class Sigmoid(Operation):
     def input_grad(self, output_grad: ndarray) -> ndarray:
         sigmoid_backward = self._output * (1.0 - self._output)
         return sigmoid_backward * output_grad
-
-
