@@ -2,8 +2,7 @@ from abc import ABC, abstractmethod
 
 from numpy import ndarray
 
-from operation import Operation
-from param_operation import ParamOperation
+from deep_learning.operations import Operation, ParamOperation
 
 
 class Layer(ABC):

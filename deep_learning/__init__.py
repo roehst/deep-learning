@@ -7,13 +7,12 @@ from sklearn.model_selection import train_test_split
 
 from abc import ABC, abstractmethod
 
-from operation import Operation
-from param_operation import ParamOperation
-from loss import Loss
-from layer import Layer
-from neural_network import NeuralNetwork
-from optimizer import Optimizer
-from trainer import Trainer
+from deep_learning.operations import Operation, ParamOperation
+from deep_learning.loss import Loss
+from deep_learning.layer import Layer
+from deep_learning.neural_network import NeuralNetwork
+from deep_learning.optimizer import Optimizer
+from deep_learning.trainer import Trainer
 
 
 class WeightMultiply(ParamOperation):

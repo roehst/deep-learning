@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from operation import Operation
+from . import Operation
 from numpy import ndarray
 
 

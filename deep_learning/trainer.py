@@ -2,8 +2,8 @@ from typing import Tuple
 
 from numpy import ndarray
 
-from neural_network import NeuralNetwork
-from optimizer import Optimizer
+from deep_learning.neural_network import NeuralNetwork
+from deep_learning.optimizer import Optimizer
 
 
 def permute_data(X: ndarray, y: ndarray) -> Tuple[ndarray, ndarray]:
