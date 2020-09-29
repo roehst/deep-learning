@@ -20,3 +20,22 @@ class Operation(ABC):
     @abstractmethod
     def input_grad(self, output_grad: ndarray) -> ndarray:
         ...
+
+
+class Linear(Operation):
+    def output(self) -> ndarray:
+        return self._input
+
+    def input_grad(self, output_grad: ndarray) -> ndarray:
+        return output_grad
+
+
+class Sigmoid(Operation):
+    def output(self) -> ndarray:
+        return 1.0 / (1.0 + np.exp(-1.0 * self._input))
+
+    def input_grad(self, output_grad: ndarray) -> ndarray:
+        sigmoid_backward = self._output * (1.0 - self._output)
+        return sigmoid_backward * output_grad
+
+
